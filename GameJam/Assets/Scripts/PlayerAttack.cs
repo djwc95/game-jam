@@ -28,15 +28,14 @@ public class PlayerAttack : MonoBehaviour
         {
             timeUntilMelee -= Time.deltaTime;
         }
+    }
 
-
-        void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Enemy")
         {
-            if (other.tag == "Enemy")
-            {
-                //other.GetComponent<Enemy>().TakeDamage(damage);
-                Debug.Log("Enemy Hit");
-            }
+            other.GetComponent<BasicEnemy>().TakeDamage(damage);
+            Debug.Log("Enemy Hit");
         }
     }
 }
