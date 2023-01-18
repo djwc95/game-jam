@@ -4,16 +4,27 @@ using UnityEngine;
 
 public class BasicEnemy : MonoBehaviour
 {
-    [SerializeField] private float health;
+    public int health = 100;
+    public int enemyDmg = 4;
 
-    public void TakeDamage(float damage)
+    public PlayerHealth playerHealth;
+
+    //public void TakeDmg(int damage)
+    //{
+        //health -= damage;
+
+        //if (health <= 0)
+        //{
+            //Destroy(gameObject);
+            //Debug.Log("enemy died");
+        //}
+    //}
+
+    public void OnTriggerEnter2D(Collider2D other)
     {
-        health -= damage;
-
-        if (health <= 0f)
+        if (other.tag == "Player")
         {
-            Destroy(gameObject);
-            Debug.Log("enemy died");
+            playerHealth.TakeDmg(enemyDmg);
         }
     }
 }

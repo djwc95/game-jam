@@ -8,7 +8,7 @@ public class PlayerAttack : MonoBehaviour
 
     [SerializeField] private float meleeSpeed;
 
-    [SerializeField] private float damage;
+    public int damage = 25;
 
     float timeUntilMelee;
 
@@ -34,7 +34,7 @@ public class PlayerAttack : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            other.GetComponent<BasicEnemy>().TakeDamage(damage);
+            other.gameObject.GetComponent<EnemyHealth>().TakeDmg(damage);
             Debug.Log("Enemy Hit");
         }
     }
