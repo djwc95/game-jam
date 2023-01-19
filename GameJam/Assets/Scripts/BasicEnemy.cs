@@ -9,17 +9,6 @@ public class BasicEnemy : MonoBehaviour
 
     public PlayerHealth playerHealth;
 
-    //public void TakeDmg(int damage)
-    //{
-        //health -= damage;
-
-        //if (health <= 0)
-        //{
-            //Destroy(gameObject);
-            //Debug.Log("enemy died");
-        //}
-    //}
-
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")

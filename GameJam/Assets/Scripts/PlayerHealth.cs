@@ -21,6 +21,7 @@ public class PlayerHealth : MonoBehaviour
         healthText.text = currentHealth.ToString() + " / " + maxHealth.ToString();
     }
 
+    //======================= TAKE DAMAGE CALLED FORM OTHER SCRIPTS =======================
     public void TakeDmg(int amount)
     {
         currentHealth -= amount;

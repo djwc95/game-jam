@@ -1,25 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerBehaviour : MonoBehaviour
 {
+    //
     public float moveSpeed = 5f;
     public Rigidbody2D rb;
-
+    //
     Vector2 moveInput;
     bool facingRight = true;
-
+    //
     [SerializeField] float dashLength = 1f;
     [SerializeField] float dashSpeed = 5f;
     float activeMoveSpeed;
     public float dashCooldown;
-
+    //
     float dashCounter;
     float dashCoolCounter;
-
+    //
     Renderer render;
     Color color;
+    public Image dashIcon;
 
     // ==================== SETTING EVERYTHING UP ==========================
     void Start()
@@ -27,6 +30,7 @@ public class PlayerBehaviour : MonoBehaviour
         activeMoveSpeed = moveSpeed;
         render = GetComponent<Renderer>();
         color = render.material.color;
+        dashIcon.enabled = true;
     }
 
     // Update is called once per frame
@@ -40,9 +44,10 @@ public class PlayerBehaviour : MonoBehaviour
         rb.velocity = moveInput * activeMoveSpeed;
 
         // ====================== DASH MECHANIC (SPACE TO DASH) =====================
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (dashCoolCounter <= 0 && dashCounter <= 0)
         {
-            if (dashCooldown <=0 && dashCounter <= 0)
+            dashIcon.enabled = true;
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 //==================== SETS MOVE SPEED TO DASH SPEED FOR X SECONDS ==========
                 activeMoveSpeed = dashSpeed;
@@ -73,6 +78,7 @@ public class PlayerBehaviour : MonoBehaviour
         if (dashCoolCounter > 0)
         {
             dashCoolCounter -= Time.deltaTime;
+            dashIcon.enabled = false;
         }
     }
 
