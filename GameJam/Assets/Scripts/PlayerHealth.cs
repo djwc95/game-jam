@@ -13,6 +13,7 @@ public class PlayerHealth : MonoBehaviour
     public float flashDuration;
 
     public CameraShake cameraShake;
+    public PlayerBehaviour playerBehaviour;
 
     // Start is called before the first frame update
     void Start()
@@ -29,10 +30,15 @@ public class PlayerHealth : MonoBehaviour
     //======================= TAKE DAMAGE CALLED FROM OTHER SCRIPTS =======================
     public void TakeDmg(int amount)
     {
+        while (Input.GetKey(KeyCode.LeftShift))
+        {
+            return;
+        }
         currentHealth -= amount;
 
         StartCoroutine(DamageFlash());
         StartCoroutine(cameraShake.Shaking());
+
         if (currentHealth <= 0)
         {
             Destroy(gameObject);
@@ -42,7 +48,11 @@ public class PlayerHealth : MonoBehaviour
     IEnumerator DamageFlash()
     {
         dmgFlash.enabled = true;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
+        dmgFlash.enabled = false;
+        yield return new WaitForSeconds(0.1f);
+        dmgFlash.enabled = true;
+        yield return new WaitForSeconds(0.1f);
         dmgFlash.enabled = false;
     }
 }

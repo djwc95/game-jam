@@ -12,9 +12,9 @@ public class BasicEnemy : MonoBehaviour
 
     public PlayerHealth playerHealth;
 
-    public void OnTriggerEnter2D(Collider2D other)
+    public void OnCollisionEnter2D(Collision2D collsion)
     {
-        if (other.tag == "Player")
+        if (collsion.gameObject.tag == "Player")
         {
             playerHealth.TakeDmg(enemyDmg);
             

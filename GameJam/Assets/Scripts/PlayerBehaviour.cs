@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PlayerBehaviour : MonoBehaviour
 {
     //
+    bool movementLocked;
     public float moveSpeed = 5f;
     public Rigidbody2D rb;
     //
@@ -31,6 +32,7 @@ public class PlayerBehaviour : MonoBehaviour
         render = GetComponent<Renderer>();
         color = render.material.color;
         dashIcon.enabled = true;
+        movementLocked = false;
     }
 
     // Update is called once per frame
@@ -43,7 +45,21 @@ public class PlayerBehaviour : MonoBehaviour
         moveInput.Normalize();
         rb.velocity = moveInput * activeMoveSpeed;
 
+        if (Input.GetKeyDown(KeyCode.LeftShift)) //Lock mvmt while using shield
+        {
+            activeMoveSpeed = 0;
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift)) //Lock mvmt while using shield
+        {
+            activeMoveSpeed = moveSpeed;
+        }
+
         // ====================== DASH MECHANIC (SPACE TO DASH) =====================
+
+        while (Input.GetKey(KeyCode.LeftShift))
+        {
+            return;
+        }
         if (dashCoolCounter <= 0 && dashCounter <= 0)
         {
             dashIcon.enabled = true;

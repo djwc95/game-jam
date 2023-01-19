@@ -16,6 +16,10 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        while (Input.GetKey(KeyCode.LeftShift))
+        {
+            return;
+        }
         if (timeUntilMelee <= 0f) 
         {
             if (Input.GetMouseButtonDown(0))
