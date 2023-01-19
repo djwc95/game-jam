@@ -7,43 +7,85 @@ public class PlayerBehaviour : MonoBehaviour
     public float moveSpeed = 5f;
     public Rigidbody2D rb;
 
-    Vector2 moveDirection;
+    Vector2 moveInput;
     bool facingRight = true;
+
+    [SerializeField] float dashLength = 1f;
+    [SerializeField] float dashSpeed = 5f;
+    float activeMoveSpeed;
+    public float dashCooldown;
+
+    float dashCounter;
+    float dashCoolCounter;
+
+    Renderer render;
+    Color color;
 
     // ==================== SETTING EVERYTHING UP ==========================
     void Start()
     {
-
+        activeMoveSpeed = moveSpeed;
+        render = GetComponent<Renderer>();
+        color = render.material.color;
     }
 
     // Update is called once per frame
     void Update()
     {
         // ===================== MOVEMENT STUFF ======================
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveY = Input.GetAxisRaw("Vertical");
+        moveInput.x = Input.GetAxisRaw("Horizontal");
+        moveInput.y = Input.GetAxisRaw("Vertical");
 
-        moveDirection = new Vector2 (moveX, moveY).normalized;
+        moveInput.Normalize();
+        rb.velocity = moveInput * activeMoveSpeed;
 
         // ====================== DASH MECHANIC (SPACE TO DASH) =====================
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            moveSpeed = (moveSpeed * 1.75f);
+            if (dashCooldown <=0 && dashCounter <= 0)
+            {
+                //==================== SETS MOVE SPEED TO DASH SPEED FOR X SECONDS ==========
+                activeMoveSpeed = dashSpeed;
+                dashCounter = dashLength;
+
+                //======================== GAIN TEMP INVINCIBILITY ====================
+                color.a = 0.5f;
+                render.material.color = color;
+                Physics2D.IgnoreLayerCollision(6, 8, true);
+            }
+        }
+
+        if (dashCounter > 0)
+        {
+            dashCounter -= Time.deltaTime;
+
+            if (dashCounter <= 0)
+            {
+                activeMoveSpeed = moveSpeed;
+                dashCoolCounter = dashCooldown;
+
+                //================== LOSE INVINCIBILITY =========================
+                Physics2D.IgnoreLayerCollision(6, 8, false);
+                color.a = 1f;
+                render.material.color = color;
+            }
+        }
+        //================= HOW LONG TILL WE CAN DASH AGAIN =====================
+        if (dashCoolCounter > 0)
+        {
+            dashCoolCounter -= Time.deltaTime;
         }
     }
 
     void FixedUpdate()
     {
-        //============================= MVMT CALCULATION ==========================
-        rb.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
-
         // ================== FLIPPING SPRITE DIRECTION BASED ON INPUT =============================
-        if (moveDirection.x > 0 && !facingRight)
+        if (moveInput.x > 0 && !facingRight)
         {
             Flip();
         }
 
-        if (moveDirection.x < 0 && facingRight)
+        if (moveInput.x < 0 && facingRight)
         {
             Flip();
         }
@@ -56,6 +98,4 @@ public class PlayerBehaviour : MonoBehaviour
         gameObject.transform.localScale = currentScale;
         facingRight = !facingRight;
     }
-
-    // ==================== TAKE DMG ON IMPACT WITH ENEMY =============================
 }
