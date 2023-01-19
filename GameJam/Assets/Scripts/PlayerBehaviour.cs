@@ -63,7 +63,6 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 activeMoveSpeed = moveSpeed;
                 dashCoolCounter = dashCooldown;
-
                 //================== LOSE INVINCIBILITY =========================
                 Physics2D.IgnoreLayerCollision(6, 8, false);
                 color.a = 1f;
