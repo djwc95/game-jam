@@ -118,7 +118,7 @@ public class PlayerBehaviour : MonoBehaviour
         facingRight = !facingRight;
     }
 
-    public void DashBuff(float amount)
+    public void DashBuff(int amount)
     {
         dashCooldown -= amount;
     }
