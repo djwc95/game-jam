@@ -10,6 +10,10 @@ public class AiChase : MonoBehaviour
 
     float currentDistance;
 
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
     void Update()
     {
         currentDistance = Vector2.Distance(transform.position, player.transform.position);

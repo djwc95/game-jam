@@ -6,20 +6,19 @@ using UnityEngine.UI;
 public class PlayerBehaviour : MonoBehaviour
 {
     //
-    bool movementLocked;
     public float moveSpeed = 5f;
     public Rigidbody2D rb;
     //
     Vector2 moveInput;
     bool facingRight = true;
     //
-    [SerializeField] float dashLength = 1f;
-    [SerializeField] float dashSpeed = 5f;
+    public float dashLength = 1f;
+    public float dashSpeed = 5f;
     float activeMoveSpeed;
     public float dashCooldown;
     //
-    float dashCounter;
-    float dashCoolCounter;
+    public float dashCounter;
+    public float dashCoolCounter;
     //
     Renderer render;
     Color color;
@@ -32,7 +31,6 @@ public class PlayerBehaviour : MonoBehaviour
         render = GetComponent<Renderer>();
         color = render.material.color;
         dashIcon.enabled = true;
-        movementLocked = false;
     }
 
     // Update is called once per frame
@@ -118,5 +116,10 @@ public class PlayerBehaviour : MonoBehaviour
         currentScale.x *= -1;
         gameObject.transform.localScale = currentScale;
         facingRight = !facingRight;
+    }
+
+    public void DashBuff(float amount)
+    {
+        dashCooldown -= amount;
     }
 }

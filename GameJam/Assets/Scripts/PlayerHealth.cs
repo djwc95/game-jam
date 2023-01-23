@@ -10,7 +10,6 @@ public class PlayerHealth : MonoBehaviour
     public bool vulnerable;
     public Text healthText;
     public Image dmgFlash;
-    public float flashDuration;
 
     public CameraShake cameraShake;
     public PlayerBehaviour playerBehaviour;
@@ -25,6 +24,15 @@ public class PlayerHealth : MonoBehaviour
     void Update()
     {
         healthText.text = currentHealth.ToString() + " / " + maxHealth.ToString();
+    }
+
+    public void OnCollisionEnter2D(Collision2D collsion)
+    {
+        if (collsion.gameObject.tag == "Enemy")
+        {
+            TakeDmg(4);
+
+        }
     }
 
     //======================= TAKE DAMAGE CALLED FROM OTHER SCRIPTS =======================

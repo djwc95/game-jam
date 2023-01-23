@@ -8,7 +8,8 @@ public class PlayerAttack : MonoBehaviour
 
     [SerializeField] private float meleeSpeed;
 
-    public int damage = 25;
+    public int damage;
+    public int dmgBuff;
 
     float timeUntilMelee;
 
@@ -16,6 +17,7 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         while (Input.GetKey(KeyCode.LeftShift))
         {
             return;
@@ -41,5 +43,10 @@ public class PlayerAttack : MonoBehaviour
             other.gameObject.GetComponent<EnemyHealth>().TakeDmg(damage);
             Debug.Log("Enemy Hit");
         }
+    }
+
+    public void DmgBuff(int dmgBuff)
+    {
+        damage += dmgBuff;
     }
 }
