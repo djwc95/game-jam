@@ -11,8 +11,15 @@ public class PlayerAttack : MonoBehaviour
     public int damage;
     public int dmgBuff;
 
+    public AudioClip swing;
+    AudioSource audioSource;
+
     float timeUntilMelee;
 
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -26,6 +33,7 @@ public class PlayerAttack : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
+                audioSource.PlayOneShot(swing, 0.5f);
                 anim.SetTrigger("Attack");
                 timeUntilMelee = meleeSpeed;
             }
