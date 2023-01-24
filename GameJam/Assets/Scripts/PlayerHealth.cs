@@ -25,17 +25,17 @@ public class PlayerHealth : MonoBehaviour
 
     void Update()
     {
-        healthText.text = currentHealth.ToString() + " / " + maxHealth.ToString();
+        healthText.text = currentHealth.ToString() + " / " + maxHealth.ToString(); //update our hp counter in UI canvas
     }
 
     public void OnCollisionEnter2D(Collision2D collsion)
     {
-        if (armor >= 1)
+        if (armor >= 1) // if we have armor, lose one until we are out
         {
             armor -= 1;
             return;
         }
-        else if (armor == 0)
+        else if (armor == 0) // if no armor, take dmg
         {
             if (collsion.gameObject.tag == "Enemy")
             {
@@ -47,22 +47,22 @@ public class PlayerHealth : MonoBehaviour
     //======================= TAKE DAMAGE CALLED FROM OTHER SCRIPTS =======================
     public void TakeDmg(int amount)
     {
-        while (Input.GetKey(KeyCode.LeftShift))
+        while (Input.GetKey(KeyCode.LeftShift)) // negate dmg while blocking
         {
             return;
         }
-        currentHealth -= amount;
+        currentHealth -= amount; // take dmg
 
-        StartCoroutine(DamageFlash());
-        StartCoroutine(cameraShake.Shaking());
+        StartCoroutine(DamageFlash()); //player feedback
+        StartCoroutine(cameraShake.Shaking()); //player feedback
 
         if (currentHealth <= 0)
         {
-            Destroy(gameObject);
+            Destroy(gameObject); // kill us if we run out of health
         }
     }
 
-    IEnumerator DamageFlash()
+    IEnumerator DamageFlash() //player feedback
     {
         dmgFlash.enabled = true;
         yield return new WaitForSeconds(0.1f);
@@ -73,6 +73,7 @@ public class PlayerHealth : MonoBehaviour
         dmgFlash.enabled = false;
     }
 
+    //========================== BUFFS WE CAN BUY IN SHOP ==============================
     public void ArmorBuff(int amount)
     {
         armor += amount;

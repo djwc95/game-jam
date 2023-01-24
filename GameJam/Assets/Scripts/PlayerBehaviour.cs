@@ -104,7 +104,6 @@ public class PlayerBehaviour : MonoBehaviour
         {
             Flip();
         }
-
         if (moveInput.x < 0 && facingRight)
         {
             Flip();
@@ -119,6 +118,7 @@ public class PlayerBehaviour : MonoBehaviour
         facingRight = !facingRight;
     }
 
+    //========================== BUFFS WE CAN BUY IN SHOP ==============================
     public void DashBuff(float amount)
     {
         dashCooldown -= amount;

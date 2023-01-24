@@ -31,7 +31,7 @@ public class PlayerAttack : MonoBehaviour
     void Update()
     {
 
-        while (Input.GetKey(KeyCode.LeftShift))
+        while (Input.GetKey(KeyCode.LeftShift)) //do nothing while blocking
         {
             return;
         }
@@ -40,13 +40,13 @@ public class PlayerAttack : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 audioSource.PlayOneShot(swing, 0.5f);
-                anim.SetTrigger("Attack");
-                timeUntilMelee = meleeSpeed;
+                anim.SetTrigger("Attack"); //start the sword swinging animation
+                timeUntilMelee = meleeSpeed; //how long until we can atk again?
             }
         }
         else
         {
-            timeUntilMelee -= Time.deltaTime;
+            timeUntilMelee -= Time.deltaTime; 
         }
     }
 
@@ -54,19 +54,19 @@ public class PlayerAttack : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            if (randValue < critChance)
+            if (randValue < critChance) // roll for a crit
             {
-                other.gameObject.GetComponent<EnemyHealth>().TakeDmg(critDmg);
+                other.gameObject.GetComponent<EnemyHealth>().TakeDmg(critDmg); //we got it
                 Debug.Log("Crit Hit");
             }
             else
             {
-                other.gameObject.GetComponent<EnemyHealth>().TakeDmg(damage);
+                other.gameObject.GetComponent<EnemyHealth>().TakeDmg(damage); // regular atk dmg
                 Debug.Log("Normal Hit");
             }
         }
     }
-
+    //========================== BUFFS WE CAN BUY IN SHOP ==============================
     public void DmgBuff(int dmgBuff)
     {
         damage += dmgBuff;

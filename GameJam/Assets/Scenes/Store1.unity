@@ -2284,7 +2284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7c5f48ed09395b4c9eed782c289256f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 0.7
+  duration: 0.35
   curve:
     serializedVersion: 2
     m_Curve:
@@ -2298,8 +2298,8 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.13851205
     - serializedVersion: 3
-      time: 0.06646984
-      value: 0.10997875
+      time: 0.017885856
+      value: 0.19766338
       inSlope: 0.111640796
       outSlope: 0.111640796
       tangentMode: 0
@@ -2307,8 +2307,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.32917774
-      value: 0.06472885
+      time: 0.34553516
+      value: 0.118836515
       inSlope: Infinity
       outSlope: Infinity
       tangentMode: 0
@@ -2318,8 +2318,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.49826872
       value: 0.02219817
-      inSlope: -0.2515254
-      outSlope: -0.2515254
+      inSlope: -0.632725
+      outSlope: -0.632725
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -2397,7 +2397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 810e413a2c978ad49919162675969428, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damping: 0.5
+  damping: 0.25
   offset: {x: 0, y: 0, z: -10}
   target: {fileID: 1804890291}
 --- !u!1 &1206114535
@@ -3412,6 +3412,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6649795209640568991, guid: 88f003d5a734d9740b28bd94c542bb82, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6649795209640568991, guid: 88f003d5a734d9740b28bd94c542bb82, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6649795209640568991, guid: 88f003d5a734d9740b28bd94c542bb82, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6649795209817127716, guid: 88f003d5a734d9740b28bd94c542bb82, type: 3}
       propertyPath: dmgFlash
       value: 
