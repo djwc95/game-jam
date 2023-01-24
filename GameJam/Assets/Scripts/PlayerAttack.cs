@@ -23,8 +23,6 @@ public class PlayerAttack : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
         critChance = 7f;
-        critDmg = (damage * 2);
-        randValue = Random.Range(0, 100);
     }
 
     // Update is called once per frame
@@ -54,8 +52,10 @@ public class PlayerAttack : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
+            randValue = Random.Range(0, 100);
             if (randValue < critChance) // roll for a crit
             {
+                critDmg = (damage * 2);
                 other.gameObject.GetComponent<EnemyHealth>().TakeDmg(critDmg); //we got it
                 Debug.Log("Crit Hit");
             }

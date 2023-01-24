@@ -21,4 +21,12 @@ public class SceneSwitch : MonoBehaviour
     {
         SceneManager.LoadScene(3);
     }
+    public void LoadStore2() 
+    {
+        SceneManager.LoadScene(4);
+    }
+    public void LoadLvl2()
+    {
+        SceneManager.LoadScene(5);
+    }
 }
