@@ -20,11 +20,11 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDmg(int amount)
     {
-        currentHealth -= amount;
-        StartCoroutine(FlashRed());
-        audioSource.PlayOneShot(clink, 0.5f);
-        GameObject dmgGiven = Instantiate(floatingDmg, transform.position, Quaternion.identity) as GameObject;
-        dmgGiven.transform.GetChild(0).GetComponent<TextMesh>().text = amount.ToString();
+        currentHealth -= amount; // take dmg
+        StartCoroutine(FlashRed()); //player feedback
+        audioSource.PlayOneShot(clink, 0.5f);//player feedback
+        GameObject dmgGiven = Instantiate(floatingDmg, transform.position, Quaternion.identity) as GameObject; // spawn floating dmg numbers
+        dmgGiven.transform.GetChild(0).GetComponent<TextMesh>().text = amount.ToString(); // reflects our current dmg to the floating dmg num
         if (currentHealth <= 0)
         {
             audioSource.PlayOneShot(clink, 0.5f);

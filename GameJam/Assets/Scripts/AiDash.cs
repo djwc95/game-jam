@@ -1,0 +1,81 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class AiDash : MonoBehaviour
+{
+    public GameObject player;
+    public float speed;
+    public float followRange;
+
+    private bool isDashing;
+    private bool canDash;
+    public float dashSpeed;
+    public float dashLength = .35f;
+    public float dashRange = 5f;
+
+    private bool isDashHandler;
+
+    public float currentDistance;
+
+    public SpriteRenderer rend;
+
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
+    void Update()
+    {
+        currentDistance = Vector2.Distance(transform.position, player.transform.position);
+        Vector2 direction = player.transform.position - transform.position;
+        direction.Normalize();
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        //======================== CHASE PLAYER IF THEY ARE IN RANGE, STOP OTHERWISE ====================
+        if (currentDistance < dashRange)
+        {
+            if (!isDashHandler)
+            {
+                StartCoroutine(Dash());
+            }
+            if (isDashing)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * speed * dashSpeed);
+            }
+        }
+        else if (currentDistance < followRange)
+        {
+            transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, speed * Time.deltaTime);
+            transform.rotation = Quaternion.Euler(Vector3.forward * angle);
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    public IEnumerator Dash()
+    {
+        isDashHandler = true;
+        canDash = true;
+        StartCoroutine(FlashGrey());
+        yield return new WaitForSeconds(0.5f); // warning period for player
+        isDashing = true;
+        yield return new WaitForSeconds(dashLength); // how long enemy dashes
+        canDash = false;
+        isDashing = false;
+        yield return new WaitForSeconds(4f); // enemy dash cooldown
+        canDash = true;
+        isDashHandler = false;
+    }
+    public IEnumerator FlashGrey() // flash to indicate dash incoming
+    {
+        rend.color = Color.grey;
+        yield return new WaitForSeconds(.15f);
+        rend.color = Color.white;
+        yield return new WaitForSeconds(.15f);
+        rend.color = Color.grey;
+        yield return new WaitForSeconds(.15f);
+        rend.color = Color.white;
+    }
+}

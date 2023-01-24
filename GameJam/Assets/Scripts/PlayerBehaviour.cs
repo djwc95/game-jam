@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerBehaviour : MonoBehaviour
 {
     //
-    public float moveSpeed = 5f;
+    public float moveSpeed;
     public Rigidbody2D rb;
     //
     Vector2 moveInput;
@@ -27,6 +27,7 @@ public class PlayerBehaviour : MonoBehaviour
     // ==================== SETTING EVERYTHING UP ==========================
     void Start()
     {
+        moveSpeed = 5f;
         activeMoveSpeed = moveSpeed;
         render = GetComponent<Renderer>();
         color = render.material.color;
@@ -118,8 +119,13 @@ public class PlayerBehaviour : MonoBehaviour
         facingRight = !facingRight;
     }
 
-    public void DashBuff(int amount)
+    public void DashBuff(float amount)
     {
         dashCooldown -= amount;
+    }
+
+    public void SpeedBuff(int amount)
+    {
+        moveSpeed += amount;
     }
 }

@@ -10,6 +10,7 @@ public class PlayerHealth : MonoBehaviour
     public bool vulnerable;
     public Text healthText;
     public Image dmgFlash;
+    public int armor;
 
     public CameraShake cameraShake;
     public PlayerBehaviour playerBehaviour;
@@ -19,6 +20,7 @@ public class PlayerHealth : MonoBehaviour
     {
         dmgFlash.enabled = false;
         currentHealth = maxHealth;
+        armor = 0;
     }
 
     void Update()
@@ -28,10 +30,17 @@ public class PlayerHealth : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D collsion)
     {
-        if (collsion.gameObject.tag == "Enemy")
+        if (armor >= 1)
         {
-            TakeDmg(4);
-
+            armor -= 1;
+            return;
+        }
+        else if (armor == 0)
+        {
+            if (collsion.gameObject.tag == "Enemy")
+            {
+                TakeDmg(4);
+            }
         }
     }
 
@@ -62,5 +71,10 @@ public class PlayerHealth : MonoBehaviour
         dmgFlash.enabled = true;
         yield return new WaitForSeconds(0.1f);
         dmgFlash.enabled = false;
+    }
+
+    public void ArmorBuff(int amount)
+    {
+        armor += amount;
     }
 }

@@ -9,15 +9,15 @@ public class SceneSwitch : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
-    public void LoadStore1()
+    public void LoadCredits()
     {
         SceneManager.LoadScene(1);
     }
-    public void LoadLvl1()
+    public void LoadStore1()
     {
         SceneManager.LoadScene(2);
     }
-    public void LoadCredits()
+    public void LoadLvl1()
     {
         SceneManager.LoadScene(3);
     }
