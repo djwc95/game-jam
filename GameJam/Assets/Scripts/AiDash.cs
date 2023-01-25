@@ -5,7 +5,8 @@ using UnityEngine;
 public class AiDash : MonoBehaviour
 {
     public GameObject player;
-    public float speed;
+    float speed;
+    public float startSpeed;
     public float followRange;
 
     private bool isDashing;
@@ -13,6 +14,9 @@ public class AiDash : MonoBehaviour
     public float dashSpeed;
     public float dashLength = .35f;
     public float dashRange = 5f;
+
+    public float kbStrength = 5f;
+    public float kbDelay = .75f;
 
     private bool isDashHandler;
 
@@ -40,18 +44,34 @@ public class AiDash : MonoBehaviour
             }
             if (isDashing)
             {
-                transform.position = Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * speed * dashSpeed);
+                transform.position = Vector2.MoveTowards(transform.position, player.transform.position, Time.deltaTime * startSpeed * dashSpeed);
             }
         }
         else if (currentDistance < followRange)
         {
-            transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, startSpeed * Time.deltaTime);
             transform.rotation = Quaternion.Euler(Vector3.forward * angle);
         }
         else
         {
             return;
         }
+    }
+
+    public void Knockback()
+    {
+        Debug.Log("Knockback called");
+        StopAllCoroutines();
+        speed = -kbStrength;
+        StartCoroutine(Reset());
+    }
+
+    IEnumerator Reset()
+    {
+        yield return new WaitForSeconds(kbDelay);
+        speed = startSpeed;
+        Debug.Log("resetSpd");
+
     }
 
     public IEnumerator Dash()

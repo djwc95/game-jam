@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -8,16 +9,20 @@ public class PlayerAttack : MonoBehaviour
 
     [SerializeField] private float meleeSpeed;
 
+    //dmg variables
     public int damage;
-    int critDmg; 
+    float timeUntilMelee;
     public int dmgBuff;
-
+    //audio
     public AudioClip swing;
     AudioSource audioSource;
-
-    float timeUntilMelee;
+    public GameObject sparks;
+    //critical hits
+    int critDmg;
     public float critChance;
     int randValue;
+
+    public AiChase aiChase;
 
     void Start()
     {
@@ -48,9 +53,26 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Enemy")
+        {
+            Instantiate(sparks, other.transform);
+            randValue = Random.Range(0, 100);
+            if (randValue < critChance) // roll for a crit
+            {
+                critDmg = (damage * 2);
+                other.gameObject.GetComponent<EnemyHealth>().TakeDmg(critDmg); //we got it
+                Debug.Log("Crit Hit");
+            }
+            else
+            {
+                other.gameObject.GetComponent<EnemyHealth>().TakeDmg(damage); // regular atk dmg
+                Debug.Log("Normal Hit");
+            }
+            other.gameObject.GetComponent<AiChase>().Knockback();
+        }
+        else if (other.tag == "DashEnemy")
         {
             randValue = Random.Range(0, 100);
             if (randValue < critChance) // roll for a crit
@@ -64,8 +86,10 @@ public class PlayerAttack : MonoBehaviour
                 other.gameObject.GetComponent<EnemyHealth>().TakeDmg(damage); // regular atk dmg
                 Debug.Log("Normal Hit");
             }
+            other.gameObject.GetComponent<AiDash>().Knockback();
         }
     }
+
     //========================== BUFFS WE CAN BUY IN SHOP ==============================
     public void DmgBuff(int dmgBuff)
     {

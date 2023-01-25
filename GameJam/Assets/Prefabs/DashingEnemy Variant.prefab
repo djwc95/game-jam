@@ -71,8 +71,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2055310375, guid: e7bc4f887766bfe45add1809841fe398, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e7bc4f887766bfe45add1809841fe398, type: 3}
 --- !u!212 &8928930853758891408 stripped
 SpriteRenderer:
@@ -193,10 +192,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  speed: 6.5
-  followRange: 8.5
+  startSpeed: 2.5
+  followRange: 2.5
   dashSpeed: 4.5
-  dashLength: 0.25
-  dashRange: 6
+  dashLength: 0.35
+  dashRange: 7.5
+  kbStrength: 5
+  kbDelay: 0.75
   currentDistance: 0
   rend: {fileID: 8928930853758891408}

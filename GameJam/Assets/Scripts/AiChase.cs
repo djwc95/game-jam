@@ -6,13 +6,19 @@ public class AiChase : MonoBehaviour
 {
     public GameObject player;
     public float speed;
+    public float startSpeed = 2.5f;
     public float distanceBetween;
+
+    public Rigidbody2D rb;
+    public float kbStrength = 5f;
+    public float kbDelay = .75f;
 
     float currentDistance;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        rb = GetComponent<Rigidbody2D>();
     }
     void Update()
     {
@@ -27,5 +33,18 @@ public class AiChase : MonoBehaviour
             transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, speed * Time.deltaTime);
             transform.rotation = Quaternion.Euler(Vector3.forward * angle);
         }
+    }
+
+    public void Knockback()
+    {
+        StopAllCoroutines();
+        speed = -kbStrength;
+        StartCoroutine(Reset());
+    }
+
+    IEnumerator Reset()
+    {
+        yield return new WaitForSeconds(kbDelay);
+        speed = startSpeed;
     }
 }
